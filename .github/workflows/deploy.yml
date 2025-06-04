@@ -48,7 +48,7 @@ jobs:
         run: flutter build web --release
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@e44db9d6b71bffaf7fa9b1b62d8fa4161d2c7f44
         with:
           name: flutter-build
           path: build/
