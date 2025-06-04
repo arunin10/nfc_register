@@ -1,0 +1,56 @@
+name: Flutter CI/CD
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.7.0'  # specify your flutter version
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run tests
+        run: flutter test --coverage
+
+      - name: Build APK (Android)
+        run: flutter build apk --release
+
+      # For iOS, you’d typically need a macOS runner and code signing set up:
+      # - name: Build iOS
+      #   runs-on: macos-latest
+      #   steps:
+      #     - uses: actions/checkout@v3
+      #     - uses: subosito/flutter-action@v2
+      #       with:
+      #         flutter-version: '3.7.0'
+      #     - run: flutter pub get
+      #     - run: flutter build ios --release --no-codesign
+
+      # For web builds:
+      - name: Build Flutter Web
+        run: flutter build web --release
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: flutter-build
+          path: build/
+
+      # Optional deploy steps here (e.g. upload APK to Firebase App Distribution, deploy web build to a server)
