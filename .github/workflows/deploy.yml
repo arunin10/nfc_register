@@ -18,10 +18,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Show Flutter and Dart versions
+        run: |
+          flutter --version
+          dart --version
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.7.0'  # specify your flutter version
+          flutter-version: '3.10.5'  # specify your flutter version
 
       - name: Install dependencies
         run: flutter pub get
